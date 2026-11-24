@@ -149,6 +149,9 @@ function setupIpcHandlers() {
         openSidebarWindow(tab);
     });
     // Encrypted Secure Storage using DPAPI / electron.safeStorage
+    electron_1.ipcMain.handle('GET_HOOK_STATUS', () => {
+        return (0, shortcuts_js_1.getHookStatus)();
+    });
     electron_1.ipcMain.handle('ENCRYPT_STRING', (_e, plainText) => {
         if (electron_1.safeStorage.isEncryptionAvailable()) {
             const encrypted = electron_1.safeStorage.encryptString(plainText);

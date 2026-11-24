@@ -10,3 +10,9 @@ release/
 .DS_Store
 Thumbs.db
 reference/
+**/bin/
+**/obj/
+**/bin-standalone/
+*.pdb
+dist-renderer/
+dist-electron/

@@ -1,64 +1,58 @@
 import React from 'react';
+import { Heart, Github, Download, ExternalLink } from 'lucide-react';
 
-export default function Footer() {
+export const Footer: React.FC = () => {
   return (
-    <footer className="border-t border-slate-900 bg-slate-950/80 pt-16 pb-12 px-4 select-none">
-      <div className="max-w-7xl mx-auto space-y-12">
-        {/* Main Columns */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-          <div>
-            <div className="flex items-center gap-2 mb-3">
-              <span className="font-mono text-sky-400 font-extrabold text-sm">^ ω ^</span>
-              <span className="font-bold text-white text-base">heyclicky</span>
-            </div>
-            <p className="text-xs text-slate-400 leading-relaxed">
-              an ai buddy that lives on your computer. 100% free forever, powered by google gemini.
-            </p>
-            <div className="mt-3 text-xs text-sky-400 font-semibold">
-              Made by Dwij Kansagara
-            </div>
+    <footer className="w-full bg-[#F5F5F5] py-14 px-4 border-t border-[#E5E5E5] text-xs font-sans text-[#666666]">
+      <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-start md:items-center justify-between gap-8">
+        <div>
+          <div className="flex items-center space-x-2 text-[#000000] font-medium text-sm mb-2">
+            <span>heyclicky for windows</span>
+            <span className="font-mono text-[10px] px-2 py-0.5 rounded bg-[#EAEAEA] text-[#333333]">v1.1.7</span>
           </div>
-
-          <div>
-            <div className="font-mono text-xs font-bold text-slate-300 uppercase tracking-wider mb-3">product</div>
-            <ul className="space-y-2 text-xs text-slate-400">
-              <li><a href="#features" className="hover:text-white transition-colors">features</a></li>
-              <li><a href="#pricing" className="hover:text-white transition-colors">pricing ($0 free)</a></li>
-              <li><a href="https://github.com/DwijKansagara/heyclicky/releases" className="hover:text-white transition-colors">download for windows (.exe)</a></li>
-              <li><a href="https://github.com/DwijKansagara/heyclicky" className="hover:text-white transition-colors">open-source repo</a></li>
-            </ul>
-          </div>
-
-          <div>
-            <div className="font-mono text-xs font-bold text-slate-300 uppercase tracking-wider mb-3">resources</div>
-            <ul className="space-y-2 text-xs text-slate-400">
-              <li><a href="#trust" className="hover:text-white transition-colors">trust & privacy</a></li>
-              <li><a href="#changelog" className="hover:text-white transition-colors">changelog (v1.1.7)</a></li>
-              <li><a href="https://aistudio.google.com/apikey" target="_blank" rel="noreferrer" className="hover:text-white transition-colors">google gemini key</a></li>
-              <li><a href="https://github.com/farzaa/clicky" target="_blank" rel="noreferrer" className="hover:text-white transition-colors">upstream clicky (mit)</a></li>
-            </ul>
-          </div>
-
-          <div>
-            <div className="font-mono text-xs font-bold text-slate-300 uppercase tracking-wider mb-3">connect</div>
-            <ul className="space-y-2 text-xs text-slate-400">
-              <li><a href="https://github.com/DwijKansagara" target="_blank" rel="noreferrer" className="hover:text-white transition-colors">github / dwijkansagara</a></li>
-              <li><a href="https://www.youtube.com/@heyclicky" target="_blank" rel="noreferrer" className="hover:text-white transition-colors">official heyclicky youtube</a></li>
-              <li><a href="https://antideploy.com" target="_blank" rel="noreferrer" className="hover:text-white transition-colors">antideploy cloud</a></li>
-            </ul>
+          <p className="lowercase max-w-md leading-relaxed text-[#555555]">
+            mit licensed &mdash; open source (based on <a href="https://github.com/farzaa/clicky" target="_blank" rel="noreferrer" className="underline hover:text-[#000000]">farzaa/clicky</a>). while the official commercial app charges for full features, this open-source windows build unlocks every feature 100% free forever.
+          </p>
+          <div className="mt-3 font-mono text-[11px] text-[#777777]">
+            crafted by <span className="text-[#000000] font-medium">dwij kansagara</span> · powered by google gemini
           </div>
         </div>
 
-        {/* Disclaimer & Attribution */}
-        <div className="pt-8 border-t border-slate-900 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500">
-          <div>
-            *heyclicky only sees your screen when you press the hotkey - screenshots are never stored*
-          </div>
-          <div>
-            MIT Licensed · Original copyright © 2026 Farza Majeed · Windows port copyright © 2026 Dwij Kansagara
-          </div>
+        <div className="flex flex-wrap items-center gap-6 font-mono text-xs">
+          <a
+            href="https://github.com/DwijKansagara/heyclicky/releases/download/v1.1.7/HeyClicky.Setup.1.1.7.exe"
+            className="text-[#0F7FFF] font-medium hover:underline flex items-center"
+          >
+            <Download className="w-3.5 h-3.5 mr-1" />
+            download .exe
+          </a>
+          <a
+            href="https://github.com/DwijKansagara/heyclicky"
+            target="_blank"
+            rel="noreferrer"
+            className="hover:text-[#000000] flex items-center transition-colors"
+          >
+            <Github className="w-3.5 h-3.5 mr-1" />
+            github
+          </a>
+          <a
+            href="https://github.com/DwijKansagara/heyclicky/releases"
+            target="_blank"
+            rel="noreferrer"
+            className="hover:text-[#000000] transition-colors"
+          >
+            releases
+          </a>
+          <a
+            href="https://aistudio.google.com"
+            target="_blank"
+            rel="noreferrer"
+            className="hover:text-[#000000] flex items-center transition-colors"
+          >
+            google ai studio <ExternalLink className="w-3 h-3 ml-1 opacity-70" />
+          </a>
         </div>
       </div>
     </footer>
   );
-}
+};

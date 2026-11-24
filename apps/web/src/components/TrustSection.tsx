@@ -1,71 +1,82 @@
 import React from 'react';
-import { Eye, HardDrive, Cpu, BookOpen, UserX, Trash2 } from 'lucide-react';
+import { Shield, EyeOff, Lock, AlertOctagon } from 'lucide-react';
 
-export default function TrustSection() {
-  const points = [
-    {
-      icon: Eye,
-      title: "screen",
-      desc: "heyclicky only sees your screen when you ask it for help. never idle in the background.",
-    },
-    {
-      icon: HardDrive,
-      title: "storage",
-      desc: "we don't keep your screenshots. your conversation history stays strictly on your local PC.",
-    },
-    {
-      icon: Cpu,
-      title: "processing",
-      desc: "your requests go directly to google gemini via your own official API key without middleman servers.",
-    },
-    {
-      icon: BookOpen,
-      title: "training",
-      desc: "google does not train its frontier foundation models on data submitted via api keys.",
-    },
-    {
-      icon: UserX,
-      title: "sharing",
-      desc: "zero tracking, zero analytics, zero selling of your personal data.",
-    },
-    {
-      icon: Trash2,
-      title: "deletion",
-      desc: "delete your data or remove your api key anytime in settings with a single click.",
-    },
-  ];
-
+export const TrustSection: React.FC = () => {
   return (
-    <section id="trust" className="py-24 px-4 max-w-7xl mx-auto border-t border-slate-900 select-none">
-      <div className="text-center max-w-2xl mx-auto mb-16 space-y-3">
-        <span className="text-xs font-mono uppercase tracking-widest text-sky-400 font-bold">
-          the fine print
-        </span>
-        <h2 className="text-3xl sm:text-4xl font-extrabold text-white">
-          what happens to your data
-        </h2>
-        <p className="text-sm text-slate-400">
-          honest, clear, and uncompromising privacy for the windows desktop.
-        </p>
-      </div>
+    <section id="trust" className="w-full bg-[#F5F5F5] py-20 px-4 border-t border-[#E5E5E5]">
+      <div className="max-w-6xl mx-auto">
+        <div className="text-center max-w-2xl mx-auto mb-16">
+          <div className="font-mono text-xs text-[#888888] lowercase mb-2">privacy & security</div>
+          <h2 className="font-sans font-medium text-3xl sm:text-4xl text-[#000000] lowercase tracking-tight">
+            engineered with strict privacy boundaries
+          </h2>
+          <p className="mt-3 text-sm text-[#666666] lowercase font-sans">
+            your computer belongs to you. zero continuous screen recordings, zero hidden tracking, 100% open-source code you can audit.
+          </p>
+        </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-5xl mx-auto">
-        {points.map((p, idx) => {
-          const Icon = p.icon;
-          return (
-            <div
-              key={idx}
-              className="p-6 rounded-3xl bg-slate-900/60 border border-slate-800/80 hover:border-slate-700 transition-colors"
-            >
-              <div className="w-10 h-10 rounded-2xl bg-sky-500/10 border border-sky-400/20 flex items-center justify-center text-sky-400 mb-4">
-                <Icon className="w-5 h-5" />
-              </div>
-              <h3 className="font-mono text-sm font-bold text-white lowercase mb-2">{p.title}</h3>
-              <p className="text-xs text-slate-400 leading-relaxed font-sans">{p.desc}</p>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {/* Boundary 1 */}
+          <div className="bg-card rounded-lg p-6 border border-[#E0E0E0] shadow-sm flex space-x-4">
+            <div className="w-10 h-10 rounded-full bg-[#F5F5F5] border border-[#E0E0E0] flex items-center justify-center text-[#000000] shrink-0">
+              <EyeOff className="w-5 h-5 text-black" />
             </div>
-          );
-        })}
+            <div>
+              <h3 className="font-sans font-medium text-base text-[#000000] lowercase mb-1">
+                zero continuous screen recording
+              </h3>
+              <p className="font-sans text-xs text-[#555555] lowercase leading-relaxed">
+                heyclicky never captures your screen in the background. screen snapshots are taken only at the exact instant you press push-to-talk (ctrl+alt) or issue a direct command, and are discarded immediately after processing.
+              </p>
+            </div>
+          </div>
+
+          {/* Boundary 2 */}
+          <div className="bg-card rounded-lg p-6 border border-[#E0E0E0] shadow-sm flex space-x-4">
+            <div className="w-10 h-10 rounded-full bg-[#F5F5F5] border border-[#E0E0E0] flex items-center justify-center text-[#000000] shrink-0">
+              <Lock className="w-5 h-5 text-black" />
+            </div>
+            <div>
+              <h3 className="font-sans font-medium text-base text-[#000000] lowercase mb-1">
+                windows dpapi local key encryption
+              </h3>
+              <p className="font-sans text-xs text-[#555555] lowercase leading-relaxed">
+                your google gemini api key and settings are encrypted using windows data protection api (electron.safestorage dpapi). keys are never uploaded to any third-party server or telemetry collector.
+              </p>
+            </div>
+          </div>
+
+          {/* Boundary 3 */}
+          <div className="bg-card rounded-lg p-6 border border-[#E0E0E0] shadow-sm flex space-x-4">
+            <div className="w-10 h-10 rounded-full bg-[#F5F5F5] border border-[#E0E0E0] flex items-center justify-center text-[#000000] shrink-0">
+              <AlertOctagon className="w-5 h-5 text-black" />
+            </div>
+            <div>
+              <h3 className="font-sans font-medium text-base text-[#000000] lowercase mb-1">
+                instant hardware kill-switch
+              </h3>
+              <p className="font-sans text-xs text-[#555555] lowercase leading-relaxed">
+                during heyclicky drive autonomous pc actions, touching your physical mouse, speaking, or tapping escape instantly halts all input injection in under 1 millisecond. no queued clicks ever run away.
+              </p>
+            </div>
+          </div>
+
+          {/* Boundary 4 */}
+          <div className="bg-card rounded-lg p-6 border border-[#E0E0E0] shadow-sm flex space-x-4">
+            <div className="w-10 h-10 rounded-full bg-[#F5F5F5] border border-[#E0E0E0] flex items-center justify-center text-[#000000] shrink-0">
+              <Shield className="w-5 h-5 text-black" />
+            </div>
+            <div>
+              <h3 className="font-sans font-medium text-base text-[#000000] lowercase mb-1">
+                prompt injection & terminal defenses
+              </h3>
+              <p className="font-sans text-xs text-[#555555] lowercase leading-relaxed">
+                incoming web content and dictation text are automatically sanitized against newline injection, malicious shell commands, and untrusted hidden instruction tags before reaching your terminal or ide.
+              </p>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
   );
-}
+};

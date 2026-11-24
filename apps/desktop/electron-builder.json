@@ -12,6 +12,12 @@
     "dist-renderer/**/*",
     "package.json"
   ],
+  "extraResources": [
+    {
+      "from": "native/bin/KeyboardHook.exe",
+      "to": "native/KeyboardHook.exe"
+    }
+  ],
   "win": {
     "target": [
       {

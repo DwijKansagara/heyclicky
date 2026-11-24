@@ -3,7 +3,7 @@ import path from 'path';
 import { createFloatingIslandWindow, resizeIsland, moveToNearestDisplay } from './floating-island.js';
 import { createOverlayWindow, setOverlayClickThrough } from './overlay-window.js';
 import { captureAllScreens } from './screen-capture.js';
-import { registerGlobalShortcuts, unregisterGlobalShortcuts } from './shortcuts.js';
+import { registerGlobalShortcuts, unregisterGlobalShortcuts, getHookStatus } from './shortcuts.js';
 import { startWebSocketBridge, stopWebSocketBridge, broadcastToExtension } from './ws-bridge.js';
 import { executeDriveActions, triggerKillSwitch, checkPhysicalMouseDisplacement } from './input-injector.js';
 
@@ -165,6 +165,10 @@ function setupIpcHandlers() {
   });
 
   // Encrypted Secure Storage using DPAPI / electron.safeStorage
+  ipcMain.handle('GET_HOOK_STATUS', () => {
+    return getHookStatus();
+  });
+
   ipcMain.handle('ENCRYPT_STRING', (_e, plainText: string) => {
     if (safeStorage.isEncryptionAvailable()) {
       const encrypted = safeStorage.encryptString(plainText);

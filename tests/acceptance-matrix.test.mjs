@@ -135,3 +135,18 @@ test('Gate M: Rate Limit Recovery, Attribution & 100% Free Forever Rules', () =>
   assert.ok(readme.includes('MIT License'), 'README must declare MIT License');
   assert.ok(readme.includes('100% Free'), 'README must highlight 100% Free Forever');
 });
+
+test('Gate N: Low-Level Windows WH_KEYBOARD_LL Keyboard Hook IPC & Event Signals', async () => {
+  const hookExe = path.resolve('apps/desktop/native/bin/KeyboardHook.exe');
+  assert.ok(fs.existsSync(hookExe), 'KeyboardHook.exe binary must exist in apps/desktop/native/bin/');
+
+  const { execFile } = await import('node:child_process');
+  const { promisify } = await import('node:util');
+  const execFileAsync = promisify(execFile);
+
+  const { stdout } = await execFileAsync(hookExe, ['--test']);
+  assert.ok(stdout.includes('[HOOK_READY]'), 'Hook must initialize');
+  assert.ok(stdout.includes('CTRL_ALT_DOWN'), 'Hook must emit CTRL_ALT_DOWN on key press');
+  assert.ok(stdout.includes('CTRL_ALT_UP'), 'Hook must emit CTRL_ALT_UP on key release');
+  assert.ok(stdout.includes('ESCAPE_KILL_SWITCH'), 'Hook must emit ESCAPE_KILL_SWITCH on escape key');
+});
