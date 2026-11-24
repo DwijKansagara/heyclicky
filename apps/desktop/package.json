@@ -1,7 +1,6 @@
 {
   "name": "@heyclicky/desktop",
   "version": "1.1.7",
-  "type": "module",
   "private": true,
   "description": "HeyClicky for Windows 10/11 Desktop Application",
   "author": "Dwij Kansagara <dwijkansagara150911@gmail.com>",
