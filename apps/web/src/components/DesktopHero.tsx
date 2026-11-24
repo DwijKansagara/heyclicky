@@ -104,7 +104,7 @@ export default function DesktopHero() {
         {/* CTA Buttons */}
         <div className="flex flex-col sm:flex-row items-center justify-center gap-3 pt-2">
           <a
-            href="https://github.com/DwijKansagara/heyclicky/releases"
+            href="https://github.com/DwijKansagara/heyclicky/releases/download/v1.1.7/HeyClicky.Setup.1.1.7.exe"
             className="w-full sm:w-auto flex items-center justify-center gap-2.5 px-6 py-3.5 rounded-2xl bg-sky-500 hover:bg-sky-400 text-slate-950 font-bold text-sm shadow-xl shadow-sky-500/20 transition-all hover:scale-[1.02] active:scale-95"
           >
             <Download className="w-4 h-4 stroke-[2.5]" />
