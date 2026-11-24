@@ -1,0 +1,16 @@
+{
+  "name": "@heyclicky/extension",
+  "version": "1.1.7",
+  "private": true,
+  "description": "HeyClicky Companion Chromium Browser Extension (Chrome, Edge, Brave, Arc, Vivaldi)",
+  "scripts": {
+    "build": "tsc && node scripts/copy-assets.mjs"
+  },
+  "dependencies": {
+    "@heyclicky/shared": "^1.1.7"
+  },
+  "devDependencies": {
+    "@types/chrome": "^0.0.308",
+    "typescript": "^5.7.3"
+  }
+}

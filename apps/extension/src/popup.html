@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>HeyClicky Companion</title>
+  <style>
+    body {
+      width: 260px;
+      margin: 0;
+      padding: 16px;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background: #111827;
+      color: #f3f4f6;
+    }
+    .header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 12px;
+    }
+    .title {
+      font-size: 15px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .buddy-face {
+      color: #60a5fa;
+      font-family: monospace;
+      font-weight: bold;
+    }
+    .status-badge {
+      font-size: 11px;
+      padding: 2px 8px;
+      border-radius: 999px;
+      font-weight: 600;
+    }
+    .status-connected {
+      background: rgba(16, 185, 129, 0.2);
+      color: #34d399;
+      border: 1px solid #10b981;
+    }
+    .status-disconnected {
+      background: rgba(239, 68, 68, 0.2);
+      color: #f87171;
+      border: 1px solid #ef4444;
+    }
+    .desc {
+      font-size: 12px;
+      color: #9ca3af;
+      margin-bottom: 14px;
+      line-height: 1.4;
+    }
+    .btn {
+      display: block;
+      width: 100%;
+      padding: 8px 12px;
+      border-radius: 8px;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      text-align: center;
+      border: none;
+      transition: all 0.2s;
+      box-sizing: border-box;
+    }
+    .btn-stop {
+      background: #dc2626;
+      color: white;
+      margin-bottom: 8px;
+    }
+    .btn-stop:hover {
+      background: #b91c1c;
+    }
+    .footer {
+      font-size: 10px;
+      color: #6b7280;
+      text-align: center;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <div class="title">
+      <span class="buddy-face">^ ω ^</span>
+      HeyClicky
+    </div>
+    <div id="statusBadge" class="status-badge status-disconnected">OFFLINE</div>
+  </div>
+  <div class="desc" id="statusDesc">
+    Connecting to HeyClicky Windows app...
+  </div>
+  <button id="btnStop" class="btn btn-stop" style="display: none;">Stop Active Browser Tasks</button>
+  <div class="footer">
+    100% Free & Open Source · Google Gemini Powered
+  </div>
+  <script src="popup.js"></script>
+</body>
+</html>

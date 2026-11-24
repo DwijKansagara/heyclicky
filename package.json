@@ -1,0 +1,26 @@
+{
+  "name": "heyclicky-monorepo",
+  "version": "1.1.7",
+  "private": true,
+  "description": "HeyClicky for Windows: 100% Free, Open-Source, Google Gemini-Powered 1:1 Replica + Companion Extension + 1:1 Website",
+  "author": "Dwij Kansagara <dwijkansagara150911@gmail.com>",
+  "license": "MIT",
+  "workspaces": [
+    "packages/*",
+    "apps/*"
+  ],
+  "scripts": {
+    "dev:web": "npm run dev --workspace=@heyclicky/web",
+    "dev:desktop": "npm run dev --workspace=@heyclicky/desktop",
+    "build": "npm run build --workspaces --if-present",
+    "build:shared": "npm run build --workspace=@heyclicky/shared",
+    "build:web": "npm run build --workspace=@heyclicky/web",
+    "build:desktop": "npm run build --workspace=@heyclicky/desktop",
+    "build:extension": "npm run build --workspace=@heyclicky/extension",
+    "package:windows": "npm run package --workspace=@heyclicky/desktop",
+    "test": "node --test tests/acceptance-matrix.test.mjs"
+  },
+  "devDependencies": {
+    "typescript": "^5.7.3"
+  }
+}

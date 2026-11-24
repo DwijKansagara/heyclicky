@@ -1,0 +1,66 @@
+name: Release Windows Desktop Installer
+
+on:
+  push:
+    tags:
+      - 'v*'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build-windows:
+    runs-on: windows-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          submodules: false
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build packages
+        run: |
+          npm run build:shared
+          npm run build:extension
+          npm run build:web
+          npm run build:desktop
+
+      - name: Package Windows Installer (.exe)
+        run: npm run package:windows
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Create GitHub Release and Upload Installer
+        uses: softprops/action-gh-release@v2
+        if: startsWith(github.ref, 'refs/tags/v')
+        with:
+          files: |
+            apps/desktop/dist/*.exe
+            apps/desktop/dist/*.blockmap
+          name: HeyClicky for Windows ${{ github.ref_name }} (100% Free & Open Source)
+          body: |
+            ## HeyClicky for Windows ${{ github.ref_name }}
+            ### 100% Free, Open Source & Powered by Google Gemini
+            
+            **Created by Dwij Kansagara** · MIT Licensed (based on `farzaa/clicky`)
+            
+            - **Native Windows 10/11 Desktop Experience** with floating island & cursor buddy (`^ ω ^`, `{ ^-^ }`, `(¬_¬)`)
+            - **Google Gemini Engine (`@google/genai`)**: Gemini Flash for low-latency voice/vision/pointing; Gemini Pro for deep agent planning and 3D scenes.
+            - **100% Free Forever**: Zero paywalls, zero artificial caps. Simply enter your Google AI Studio API key (`aistudio.google.com`).
+            - **Screen-Aware Dictation**: 117 languages, auto-grammar, custom dictionary, terminal newline safety.
+            - **On-Screen 2D Drawing & Scroll Tracking**: Smoothly tracks viewport and map scrolls.
+            - **Interactive 3D Visualizer**: Real-time Three.js scene generation.
+            - **Parallel Agent Buddies**: Multi-job state machine with checkpoint resumption and 20-min watchdog.
+            - **HeyClicky Drive**: Autonomous Windows control with persistent "Allow Always" permission and instant mouse/voice/Esc kill-switch.
+            - **Companion Chromium Browser Extension** included in `/apps/extension`.
+          draft: false
+          prerelease: false
