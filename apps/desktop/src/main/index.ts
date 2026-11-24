@@ -1,4 +1,4 @@
-import { app, BrowserWindow, ipcMain, Tray, Menu, nativeImage, safeStorage } from 'electron';
+import { app, BrowserWindow, ipcMain, Tray, Menu, nativeImage, safeStorage, nativeTheme } from 'electron';
 import path from 'path';
 import { createFloatingIslandWindow, resizeIsland, moveToNearestDisplay } from './floating-island.js';
 import { createOverlayWindow, setOverlayClickThrough } from './overlay-window.js';
@@ -101,14 +101,19 @@ function openSidebarWindow(initialTab: string = 'chat') {
     return;
   }
 
+  const isDark = nativeTheme.shouldUseDarkColors;
+
   sidebarWin = new BrowserWindow({
-    width: 960,
-    height: 680,
-    minWidth: 700,
-    minHeight: 500,
-    frame: true,
-    title: 'HeyClicky - Windows Assistant & Settings',
-    backgroundColor: '#0f172a',
+    width: 980,
+    height: 700,
+    minWidth: 720,
+    minHeight: 520,
+    frame: false,
+    transparent: true,
+    hasShadow: true,
+    skipTaskbar: false,
+    title: 'HeyClicky for Windows',
+    backgroundColor: '#00000000',
     webPreferences: {
       preload: preloadPath,
       nodeIntegration: false,
@@ -159,9 +164,28 @@ function setupIpcHandlers() {
     triggerKillSwitch(reason);
   });
 
-  // Open sidebar / settings window
-  ipcMain.on('OPEN_SIDEBAR', (_e, tab?: string) => {
-    openSidebarWindow(tab);
+  // Window management
+  ipcMain.handle('GET_SYSTEM_THEME', () => {
+    return nativeTheme.shouldUseDarkColors ? 'dark' : 'light';
+  });
+
+  ipcMain.on('MINIMIZE_WINDOW', (event) => {
+    const win = BrowserWindow.fromWebContents(event.sender);
+    win?.minimize();
+  });
+
+  ipcMain.on('MAXIMIZE_WINDOW', (event) => {
+    const win = BrowserWindow.fromWebContents(event.sender);
+    if (!win) return;
+    if (win.isMaximized()) {
+      win.unmaximize();
+    } else {
+      win.maximize();
+    }
+  });
+
+  ipcMain.on('CLOSE_SIDEBAR', () => {
+    sidebarWin?.close();
   });
 
   // Encrypted Secure Storage using DPAPI / electron.safeStorage

@@ -94,14 +94,18 @@ function openSidebarWindow(initialTab = 'chat') {
         sidebarWin.webContents.send('NAVIGATE_TAB', initialTab);
         return;
     }
+    const isDark = electron_1.nativeTheme.shouldUseDarkColors;
     sidebarWin = new electron_1.BrowserWindow({
-        width: 960,
-        height: 680,
-        minWidth: 700,
-        minHeight: 500,
-        frame: true,
-        title: 'HeyClicky - Windows Assistant & Settings',
-        backgroundColor: '#0f172a',
+        width: 980,
+        height: 700,
+        minWidth: 720,
+        minHeight: 520,
+        frame: false,
+        transparent: true,
+        hasShadow: true,
+        skipTaskbar: false,
+        title: 'HeyClicky for Windows',
+        backgroundColor: '#00000000',
         webPreferences: {
             preload: preloadPath,
             nodeIntegration: false,
@@ -144,9 +148,27 @@ function setupIpcHandlers() {
     electron_1.ipcMain.on('TRIGGER_DRIVE_KILL_SWITCH', (_e, reason) => {
         (0, input_injector_js_1.triggerKillSwitch)(reason);
     });
-    // Open sidebar / settings window
-    electron_1.ipcMain.on('OPEN_SIDEBAR', (_e, tab) => {
-        openSidebarWindow(tab);
+    // Window management
+    electron_1.ipcMain.handle('GET_SYSTEM_THEME', () => {
+        return electron_1.nativeTheme.shouldUseDarkColors ? 'dark' : 'light';
+    });
+    electron_1.ipcMain.on('MINIMIZE_WINDOW', (event) => {
+        const win = electron_1.BrowserWindow.fromWebContents(event.sender);
+        win?.minimize();
+    });
+    electron_1.ipcMain.on('MAXIMIZE_WINDOW', (event) => {
+        const win = electron_1.BrowserWindow.fromWebContents(event.sender);
+        if (!win)
+            return;
+        if (win.isMaximized()) {
+            win.unmaximize();
+        }
+        else {
+            win.maximize();
+        }
+    });
+    electron_1.ipcMain.on('CLOSE_SIDEBAR', () => {
+        sidebarWin?.close();
     });
     // Encrypted Secure Storage using DPAPI / electron.safeStorage
     electron_1.ipcMain.handle('GET_HOOK_STATUS', () => {

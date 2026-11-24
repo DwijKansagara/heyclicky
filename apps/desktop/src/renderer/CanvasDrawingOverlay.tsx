@@ -93,12 +93,19 @@ export default function CanvasDrawingOverlay() {
     }
   }, [drawings, scrollOffset]);
 
-  const clearAllDrawings = () => {
-    setDrawings([]);
-    if (window.electronAPI) {
-      window.electronAPI.setOverlayClickThrough(true);
-    }
-  };
+  useEffect(() => {
+    window.dispatchEvent(
+      new CustomEvent('HEYCLICKY_DRAWINGS_CHANGED', { detail: { hasDrawings: drawings.length > 0 } })
+    );
+  }, [drawings.length]);
+
+  useEffect(() => {
+    const handleClear = () => {
+      setDrawings([]);
+    };
+    window.addEventListener('HEYCLICKY_CLEAR_DRAWINGS', handleClear);
+    return () => window.removeEventListener('HEYCLICKY_CLEAR_DRAWINGS', handleClear);
+  }, []);
 
   const hasDrawings = drawings.length > 0;
 

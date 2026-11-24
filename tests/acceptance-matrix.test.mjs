@@ -40,7 +40,7 @@ test('Gate B: Voice & Gemini Engine Smart Routing', () => {
 
 test('Gate C: Privacy First Boundaries & Zero Continuous Desktop Recording', () => {
   const sharedConfig = DEFAULT_SETTINGS;
-  assert.strictEqual(sharedConfig.theme, 'dark');
+  assert.ok(['system', 'dark', 'light'].includes(sharedConfig.theme), 'Theme must follow system or user selection');
   assert.ok(sharedConfig.customDictionary.length > 0);
 });
 
@@ -149,4 +149,13 @@ test('Gate N: Low-Level Windows WH_KEYBOARD_LL Keyboard Hook IPC & Event Signals
   assert.ok(stdout.includes('CTRL_ALT_DOWN'), 'Hook must emit CTRL_ALT_DOWN on key press');
   assert.ok(stdout.includes('CTRL_ALT_UP'), 'Hook must emit CTRL_ALT_UP on key release');
   assert.ok(stdout.includes('ESCAPE_KILL_SWITCH'), 'Hook must emit ESCAPE_KILL_SWITCH on escape key');
+});
+
+test('Gate O: All 30 Google Gemini Voices & Native Audio Configuration', async () => {
+  const { GEMINI_VOICES, CURSOR_COLORS } = await import('../packages/shared/dist/index.js');
+  assert.strictEqual(GEMINI_VOICES.length, 30, 'Must expose all 30 Google Gemini voices');
+  assert.ok(GEMINI_VOICES.some(v => v.id === 'Puck' && v.style.includes('Upbeat')), 'Puck must be available as default upbeat voice');
+  assert.ok(GEMINI_VOICES.some(v => v.id === 'Aoede'), 'Aoede must be available');
+  assert.ok(GEMINI_VOICES.some(v => v.id === 'Sulafat'), 'Sulafat must be available');
+  assert.ok(CURSOR_COLORS.length >= 7, 'Must have circular color dot palette');
 });

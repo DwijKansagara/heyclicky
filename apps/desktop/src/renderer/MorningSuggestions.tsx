@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Check, Edit2, X, Sparkles, Clock } from 'lucide-react';
+import { Check, Edit2, X, Sparkles, Clock, Sliders } from 'lucide-react';
 import { agentBuddiesManager } from '../services/agent-buddies.js';
 
 interface SuggestionItem {
@@ -12,23 +12,29 @@ interface SuggestionItem {
   steps: string[];
 }
 
-export default function MorningSuggestions({ onDismiss }: { onDismiss?: () => void }) {
+export default function MorningSuggestions({ 
+  onSelectPrompt,
+  onDismiss 
+}: { 
+  onSelectPrompt?: (prompt: string) => void;
+  onDismiss?: () => void;
+}) {
   const [suggestions, setSuggestions] = useState<SuggestionItem[]>([
     {
       id: 'sug_1',
-      title: 'Summarize 4 unread investor updates in Gmail',
+      title: 'summarize 4 unread investor updates in gmail',
       estimatedTime: '2 mins',
-      deliverable: 'Clean bulleted brief with key metrics and asks',
+      deliverable: 'clean bulleted brief with key metrics and asks',
       sourceApp: 'Gmail (Work)',
-      steps: ['Scan inbox for sender labels', 'Extract traction metrics', 'Draft executive summary'],
+      steps: ['scan inbox for sender labels', 'extract traction metrics', 'draft executive summary'],
     },
     {
       id: 'sug_2',
-      title: 'Prepare talking points for 2 PM Product Sync',
+      title: 'prepare talking points for 2 pm product sync',
       estimatedTime: '3 mins',
-      deliverable: 'Notion meeting agenda draft',
+      deliverable: 'notion meeting agenda draft',
       sourceApp: 'Google Calendar',
-      steps: ['Read calendar attendee list', 'Fetch recent GitHub commit logs', 'Outline 3 discussion points'],
+      steps: ['read calendar attendee list', 'fetch recent github commit logs', 'outline 3 discussion points'],
     },
   ]);
 
@@ -39,6 +45,10 @@ export default function MorningSuggestions({ onDismiss }: { onDismiss?: () => vo
     setSuggestions((prev) => prev.filter((s) => s.id !== item.id));
   };
 
+  const handleAdjust = (item: SuggestionItem) => {
+    onSelectPrompt?.(`adjust plan for: ${item.title}`);
+  };
+
   const handleNah = (id: string) => {
     setSuggestions((prev) => prev.filter((s) => s.id !== id));
   };
@@ -46,14 +56,14 @@ export default function MorningSuggestions({ onDismiss }: { onDismiss?: () => vo
   if (suggestions.length === 0) return null;
 
   return (
-    <div className="w-full mt-2 space-y-2">
+    <div className="w-full space-y-2 select-none">
       <div className="flex items-center justify-between px-1">
-        <span className="text-[11px] font-semibold text-sky-400 flex items-center gap-1.5 uppercase tracking-wider">
-          <Sparkles className="w-3 h-3 text-amber-400" />
-          Morning Suggestions
+        <span className="text-[10px] font-mono text-sky-500 uppercase tracking-wider flex items-center space-x-1">
+          <Sparkles className="w-2.5 h-2.5 text-amber-400" />
+          <span>morning suggestions</span>
         </span>
-        <button onClick={onDismiss} className="text-slate-400 hover:text-slate-200 text-xs">
-          Dismiss
+        <button onClick={onDismiss} className="text-[10px] font-mono text-gray-400 hover:text-gray-200 lowercase">
+          dismiss
         </button>
       </div>
 
@@ -62,26 +72,33 @@ export default function MorningSuggestions({ onDismiss }: { onDismiss?: () => vo
           key={item.id}
           onMouseEnter={() => setHoveredId(item.id)}
           onMouseLeave={() => setHoveredId(null)}
-          className="relative group p-2.5 rounded-xl bg-slate-800/80 hover:bg-slate-800 border border-slate-700/60 transition-all shadow-md"
+          className="relative group p-2.5 rounded-xl bg-black/5 dark:bg-white/5 border border-black/5 dark:border-white/5 hover:border-sky-500/30 transition-all text-xs"
         >
           <div className="flex items-center justify-between gap-2">
-            <div className="text-xs font-medium text-slate-200 truncate flex-1">
+            <div className="text-xs font-sans text-black dark:text-white truncate flex-1 lowercase">
               {item.title}
             </div>
-            <div className="flex items-center gap-1.5 shrink-0">
+            <div className="flex items-center space-x-1.5 shrink-0">
               <button
                 onClick={() => handleDoIt(item)}
-                className="flex items-center gap-1 px-2.5 py-1 rounded-lg bg-sky-500 hover:bg-sky-400 text-slate-950 font-bold text-[11px] transition-all shadow-sm active:scale-95"
+                className="btn-aqua-glass px-2.5 py-1 text-[11px] font-medium"
               >
-                <Check className="w-3 h-3 stroke-[3]" />
-                Do it
+                <Check className="w-3 h-3 mr-1" />
+                <span>do it</span>
+              </button>
+              <button
+                onClick={() => handleAdjust(item)}
+                className="p-1 rounded-md text-gray-400 hover:text-white hover:bg-white/10 text-[10px] lowercase transition-colors"
+                title="Adjust plan"
+              >
+                <Sliders className="w-3 h-3" />
               </button>
               <button
                 onClick={() => handleNah(item.id)}
-                className="p-1 rounded-lg text-slate-400 hover:text-slate-200 hover:bg-slate-700/50 text-[11px] transition-colors"
-                title="Nah, dismiss"
+                className="p-1 rounded-md text-gray-400 hover:text-white hover:bg-white/10 text-[10px] lowercase transition-colors"
+                title="Nah"
               >
-                <X className="w-3.5 h-3.5" />
+                <X className="w-3 h-3" />
               </button>
             </div>
           </div>
@@ -90,24 +107,24 @@ export default function MorningSuggestions({ onDismiss }: { onDismiss?: () => vo
           <AnimatePresence>
             {hoveredId === item.id && (
               <motion.div
-                initial={{ opacity: 0, y: 4, scale: 0.98 }}
+                initial={{ opacity: 0, y: 3, scale: 0.98 }}
                 animate={{ opacity: 1, y: 0, scale: 1 }}
                 exit={{ opacity: 0, scale: 0.98 }}
-                className="mt-2.5 p-3 rounded-lg bg-amber-50 border border-amber-200 text-amber-950 shadow-xl font-mono text-[11px] space-y-1.5"
+                className="mt-2 p-2.5 rounded-lg bg-[#FEF08A] text-[#1C1917] border border-[#FDE047] shadow-lg font-mono text-[10px] space-y-1"
               >
-                <div className="flex items-center justify-between font-bold border-b border-amber-200/80 pb-1">
-                  <span>Yellow-Pad Plan</span>
-                  <span className="flex items-center gap-1 text-[10px] text-amber-800 font-sans">
-                    <Clock className="w-3 h-3" /> {item.estimatedTime}
+                <div className="flex items-center justify-between font-bold border-b border-black/10 pb-0.5">
+                  <span className="uppercase tracking-wider">yellow-pad plan</span>
+                  <span className="flex items-center space-x-1 text-[#44403C]">
+                    <Clock className="w-2.5 h-2.5" /> <span>{item.estimatedTime}</span>
                   </span>
                 </div>
                 <div>
-                  <span className="font-semibold text-amber-900">Deliverable:</span> {item.deliverable}
+                  <span className="font-semibold">deliverable:</span> {item.deliverable}
                 </div>
-                <div className="space-y-0.5 pt-1">
+                <div className="space-y-0.5 pt-0.5">
                   {item.steps.map((st, i) => (
-                    <div key={i} className="flex items-center gap-1.5 text-amber-900/90 text-[10px]">
-                      <span className="text-amber-500">[{i + 1}]</span>
+                    <div key={i} className="flex items-center space-x-1 text-[#292524]">
+                      <span className="text-[#CA8A04]">[{i + 1}]</span>
                       <span>{st}</span>
                     </div>
                   ))}

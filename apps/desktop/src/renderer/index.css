@@ -2,6 +2,15 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+  body {
+    user-select: none;
+    -webkit-user-select: none;
+    overflow: hidden;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  }
+}
+
 @layer utilities {
   .no-drag {
     -webkit-app-region: no-drag;
@@ -11,10 +20,50 @@
   }
 }
 
+/* Calm Soft-Dotted Background for HeyClicky Panels */
+.bg-calm-dots-light {
+  background-color: #F7F7F7;
+  background-image: radial-gradient(#d1d5db 1px, transparent 1px);
+  background-size: 16px 16px;
+}
+
+.bg-calm-dots-dark {
+  background-color: #141416;
+  background-image: radial-gradient(#2E2E34 1.2px, transparent 1.2px);
+  background-size: 16px 16px;
+}
+
+/* Signature Aqua Glass Button */
+.btn-aqua-glass {
+  background: linear-gradient(180deg, #FAFCFF 0%, #6FB3F6 100%);
+  border: 1px solid #221898;
+  box-shadow: inset 0 1px 1px rgba(255,255,255,0.95), inset 0 -2px 4px rgba(15,60,140,0.22), 0 4px 12px rgba(34,24,152,0.14);
+  color: #000000;
+  border-radius: 9999px;
+  font-family: 'Inter', sans-serif;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  transition: all 0.15s cubic-bezier(0.16, 1, 0.3, 1);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.btn-aqua-glass:hover {
+  filter: brightness(1.05);
+  transform: translateY(-1px);
+}
+
+.btn-aqua-glass:active {
+  filter: brightness(0.96);
+  transform: translateY(1px);
+}
+
 /* Custom scrollbars */
 ::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
+  width: 5px;
+  height: 5px;
 }
 ::-webkit-scrollbar-track {
   background: transparent;
